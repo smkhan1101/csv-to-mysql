@@ -33,7 +33,41 @@ async function parseRecords(parser) {
                 records.push({
                     average_GPA: record['Average GPA'],
                     City: record['City'],
-                    ACT_composite: record['ACT composite']
+                    Added: record['Added'],
+                    Conference: record['Conference'],
+                    Division: record['Division'],
+                    Email_address: record['Email Address'],
+                    First_name: record['First name'],
+                    HBCU: record['HBCU?'],
+                    Individual: record["Individual's"],
+                    IPEDS_NCES_ID: record['IPEDS/NCES'],
+                    Landing_pages: record['Landing pages'],
+                    Last_name: record['Last name'],
+                    Majors_offered: record['Majors offered'],
+                    No_of_undergrads: record['No. of undergrads'],
+                    Phone_number: record['Phone number'],
+                    Position: record['Position'],
+                    Private_Public: record['Private/Public'],
+                    Questionnaire: record['Questionnaire'],
+                    Region: record['Region'],
+                    Religious_affiliation: record['Religious affiliation?'],
+                    Removed: record['Removed? (y)'],
+                    SAT_Math: record['SAT-Math'],
+                    SAT_Reading: record['SAT-Reading'],
+                    School: record['School'],
+                    School_2: record['School 2'],
+                    School_3: record['School 3'],
+                    Size_of_city: record['Size of city'],
+                    Sport_code: record['Sport code'],
+                    State: record['State'],
+                    State_2: record['State 2'],
+                    Team: record["Team's"],
+                    Total_yearly_cost: record['Total yearly cost'],
+                    US_News_ranking: record['U.S. News ranking'],
+                    Unique_ID: record['Unique ID'],
+
+
+
                 });
             }
         }
@@ -59,7 +93,7 @@ const insertData = (records, connection, res) => {
         const values = keys.map(key => (record[key] === undefined) ? 'NULL' : `'${record[key]}'`).join(', ');
 
         const insertQuery = `
-            INSERT INTO your_table (${keys.join(', ')}) 
+            INSERT INTO sample_football (${keys.join(', ')}) 
             VALUES (${values});
         `;
 
@@ -84,11 +118,11 @@ const insertData = (records, connection, res) => {
  * @param {Array} data - An array of records.
  * @param {Connection} connection - The MySQL database connection.
  */
-const createTable = (data, connection) => {
+const createTable = (data, connection, res) => {
     const keys = Object.keys(data[0]);
 
     const createTableQuery = `
-        CREATE TABLE IF NOT EXISTS your_table (
+        CREATE TABLE IF NOT EXISTS sample_football (
             ${keys.map(key => `${key} VARCHAR(255)`).join(',\n')}
         );
     `;
@@ -110,7 +144,7 @@ const createTable = (data, connection) => {
  * @param {Response} res - The HTTP response object to send a message when insertion is complete.
  */
 const checkTableAndInsert = (records, connection, res) => {
-    const checkTableQuery = "SHOW TABLES LIKE 'your_table';";
+    const checkTableQuery = "SHOW TABLES LIKE 'sample_football';";
 
     connection.query(checkTableQuery, (err, results, fields) => {
         if (err) throw err;
